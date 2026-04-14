@@ -1,0 +1,271 @@
+GAME DESIGN DOCUMENT (GDD)
+Hide ‘N Reap (2.5D Multiplayer – Scythe System)
+1. High Concept
+
+Genre: Competitive Multiplayer / Social Deception / Action-Humor
+Camera: 2.5D (side view with limited depth lanes)
+Players: 3–6 (recommended: 4–5 for initial builds)
+
+Core Idea:
+Players are ghosts competing to become the Reaper by claiming the scythe. While the scythe exists, ghosts can possess bodies to hide. When the scythe is lost, all bodies violently collapse, exposing everyone and triggering a scramble for power. The player with the most reaps wins.
+
+2. Core Gameplay Pillars
+1. Power is Temporary
+The Reaper is not permanent
+Control shifts throughout the match via the scythe
+2. Possession is Conditional
+Ghosts can only possess bodies while the scythe exists
+No scythe = no safety
+3. Phase-Based Chaos
+The game alternates between:
+Controlled deception (possession)
+Sudden exposure (collapse)
+Competitive scramble (scythe respawn)
+4. Behavior is Your Disguise
+Survival depends on mimicking NPC patterns
+No UI indicators—only observation and mistakes
+3. Match Flow (CORE LOOP)
+Start of Match
+All players spawn as ghosts
+Scythe spawns in the world
+PHASE 1 — POSSESSION PHASE (Scythe Active)
+One player becomes Reaper by claiming the scythe
+Other players:
+Possess NPCs
+Hide and blend in
+Reaper:
+Hunts
+Forces mistakes
+Reaps exposed ghosts
+PHASE 2 — COLLAPSE PHASE (Scythe Lost)
+
+Triggered when:
+
+Reaper energy depletes OR
+Reaper takes enough damage
+
+Effects:
+
+All ghosts are forcibly ejected
+All possessed bodies explode / collapse instantly
+Possession is disabled
+All players are exposed
+PHASE 3 — SCRAMBLE PHASE
+Short delay (≈3–6 seconds recommended)
+Scythe respawns in the world
+Ghosts have brief concealment window
+
+Objective:
+
+Race to:
+Claim scythe (become Reaper)
+Re-enter bodies when available
+Loop Repeats Until Match Ends
+4. Win Condition
+Player with the highest number of reaps (kills) wins
+5. Player Roles
+5.1 Ghost (Default State)
+
+Abilities:
+
+Fast movement
+Limited phasing through objects
+
+Limitations:
+
+Cannot interact physically
+Vulnerable to instant reap
+Cannot possess when scythe is absent
+5.2 Possessed State (Conditional)
+
+Requirements:
+
+Scythe must exist in the world
+
+Benefits:
+
+Physical interaction
+Access to host abilities
+Hidden from direct detection
+
+Risks:
+
+Body decay (rot)
+Behavioral detection
+Forced ejection on collapse
+5.3 Reaper (Power Role)
+
+Activation:
+
+Obtained by picking up the scythe
+
+Abilities:
+
+Reap exposed ghosts (score points)
+Area disruption abilities:
+Lane Strike
+Decay Pulse
+Hazard triggers
+
+Limitations:
+
+Cannot directly detect ghosts in bodies
+Cannot reap possessed players directly
+Energy-based duration
+
+Loss Conditions:
+
+Energy depletion
+Taking sufficient damage
+6. Core Systems
+6.1 Scythe System (Primary Game Driver)
+Exists as a world object
+Grants Reaper role on pickup
+
+Lifecycle:
+
+Spawn → claimable
+Active → Reaper exists
+Lost → triggers Collapse Phase
+Respawn → begins Scramble Phase
+
+Design Requirements:
+
+Clearly visible
+High-risk to acquire
+Central to all player decisions
+6.2 Possession System
+Enabled only while scythe exists
+Instant or near-instant takeover
+
+Constraints:
+
+Range-based
+Line-of-sight (recommended)
+6.3 NPC Behavior System
+
+Architecture:
+
+Simple state machines
+
+Examples:
+
+Human:
+
+Walk → Pause → Resume
+
+Dog:
+
+Wander → Sniff → Sit
+
+Bird:
+
+Perch → Hop → Short flight
+
+Design Rule:
+
+Behavior must be predictable and mimic-able
+6.4 Rot System (Adjusted Role)
+
+Purpose:
+
+Prevent long-term body camping
+Provide subtle detection cues
+
+Behavior:
+
+Gradual decay over time
+Accelerated by damage
+
+Important Change:
+
+Rot is NOT tied to phase transitions
+Cleared instantly during Collapse Phase
+6.5 Collapse System (NEW CORE FEATURE)
+
+Triggered when scythe is lost:
+
+All bodies:
+Explode / violently collapse
+All ghosts ejected
+Possession disabled
+Visual reset of playfield
+6.6 Detection System
+
+No UI markers.
+
+Detection based on:
+
+Behavior inconsistencies
+Movement errors
+Rot visuals
+Timing mistakes
+7. Environment Design
+Structure: 2.5D Lane-Based
+2–3 depth lanes maximum
+Side-scrolling layout
+Zones:
+Streets
+Interiors
+Vertical spaces (roofs, trees)
+Design Rules:
+Compact maps
+High visibility
+No excessive empty space
+8. NPC Types (Initial Scope)
+Type	Role
+Human	Balanced movement
+Dog	Faster, erratic
+Bird	Vertical access
+9. Controlled Variation Systems
+9.1 Character Variation
+Clothing
+Size
+Color
+9.2 Behavior Templates
+Predefined variants (not random AI)
+9.3 Hazard System
+Trigger-based events
+Influenced by Reaper
+10. Multiplayer Requirements
+Clear visual readability
+Consistent behavior systems
+Reliable state synchronization:
+Scythe ownership
+Possession state
+Phase transitions
+11. Visual Style
+Bright, stylized, cartoon horror
+Exaggerated animations for clarity
+Strong silhouettes
+12. Audio Style
+Light, playful tone
+Sharp audio cues for:
+Collapse event
+Scythe spawn
+Reap actions
+13. Technical Direction
+Engine: Unity (URP, 3D with 2.5D camera)
+AI: State machine-driven
+Networking: TBD (NGO / FishNet / Mirror)
+14. Prototype Scope (DO NOT EXPAND YET)
+1 map (street + vertical layer)
+2–3 players minimum
+Core systems only:
+Scythe spawn/pickup
+Possession enable/disable
+Collapse event (corpse explosion)
+Basic Reaper ability
+Score tracking
+15. Key Risks
+Risk	Impact
+Poor phase timing	Game feels chaotic or slow
+Weak Reaper abilities	No threat
+Over-complex AI	Breaks deception
+Low visual clarity	Unplayable
+Scythe imbalance	Snowballing
+16. Design Summary
+
+Hide ‘N Reap is:
+
+A phase-driven competitive deception game where players cycle between hiding, exposure, and power control, all centered around a contested object (the scythe).

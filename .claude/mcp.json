@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "ai-game-developer": {
+      "command": "E:/Unity/HideNReap/Library/mcp-server/win-x64/unity-mcp-server.exe",
+      "args": [
+        "port=26876",
+        "plugin-timeout=10000",
+        "client-transport=stdio",
+        "authorization=none"
+      ]
+    },
+    "blender": {
+      "command": "C:/Users/steph/AppData/Local/Microsoft/WinGet/Packages/astral-sh.uv_Microsoft.Winget.Source_8wekyb3d8bbwe/uvx.exe",
+      "args": ["blender-mcp"],
+      "env": {
+        "DISABLE_TELEMETRY": "true"
+      }
+    }
+  }
+}

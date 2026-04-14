@@ -1,0 +1,95 @@
+# ===========================
+# Unity .gitignore for HideNReap
+# Only track HNR project files, not third-party assets
+# ===========================
+
+# Unity generated
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# IDE
+.vs/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Crashlytics
+crashlytics-build.properties
+sysinfo.txt
+
+# ===========================
+# Third-party asset exclusion
+# Ignore everything in Assets/ by default, then whitelist HNR
+# ===========================
+
+# Ignore all Assets content
+/Assets/*
+
+# Whitelist: HNR project folder (all contents)
+!/Assets/_HNR/
+!/Assets/_HNR/**
+
+# Whitelist: Unity project settings
+!/Assets/Settings/
+!/Assets/Settings/**
+!/Assets/Settings.meta
+
+# Whitelist: Scenes at root level (if any)
+!/Assets/Scenes/
+!/Assets/Scenes/**
+!/Assets/Scenes.meta
+
+# Whitelist: Input System actions
+!/Assets/InputSystem_Actions.inputactions
+!/Assets/InputSystem_Actions.inputactions.meta
+
+# Whitelist: meta files for whitelisted folders
+!/Assets/_HNR.meta
+
+# ===========================
+# Project config to track
+# ===========================
+
+# Track Packages manifest only (not downloaded package contents)
+/Packages/*
+!/Packages/manifest.json
+!/Packages/packages-lock.json
+
+# Track project settings
+!/ProjectSettings/
+
+# Track Documents
+!/Documents/
+
+# Track MCP/Claude/VSCode config
+!/.mcp.json
+!/.claude/
+!/.vscode/
+
+# But ignore .vscode user settings that are machine-specific
+.vscode/settings.json
+
+# Secrets -- never commit
+*.env
+credentials.json
