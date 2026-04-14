@@ -40,8 +40,10 @@ namespace HNR.Possession
             config = npcConfig;
             isActive = true;
 
-            // Clear constraints so rotation can be applied
+            // Clear constraints and velocity so position/rotation can be applied cleanly
             rb.constraints = RigidbodyConstraints.None;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
 
             // Stand up: raise Y so capsule isn't embedded in ground
             // Capsule is 2 units tall, center needs to be at Y=1 to clear the ground
@@ -49,6 +51,10 @@ namespace HNR.Possession
             float halfHeight = cap != null ? cap.height * 0.5f * transform.lossyScale.y : 1f;
             Vector3 pos = transform.position;
             pos.y = halfHeight;
+
+            // Use rb.position/rotation so physics respects the change immediately
+            rb.position = pos;
+            rb.rotation = Quaternion.identity;
             transform.position = pos;
             transform.rotation = Quaternion.identity;
 
@@ -68,8 +74,11 @@ namespace HNR.Possession
 
             // Body drops -- lie down, gravity settles it
             rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
             rb.constraints = RigidbodyConstraints.None;
-            transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            Quaternion lieDown = Quaternion.Euler(0f, 0f, 90f);
+            rb.rotation = lieDown;
+            transform.rotation = lieDown;
             rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
             // Keep gravity and dynamic rigidbody -- physics settles the body naturally
         }

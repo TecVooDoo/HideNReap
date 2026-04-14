@@ -1,7 +1,7 @@
 # Hide 'N Reap -- Code Reference
 
 **Purpose:** Script inventory and API reference for HNR.
-**Last Updated:** April 2, 2026 (Session 3 -- Sprint 1 Foundation)
+**Last Updated:** April 13, 2026 (Session 4 -- Input System fix, stand-up physics fix)
 
 ---
 
@@ -21,7 +21,7 @@
 | Script | Path | Purpose |
 |--------|------|---------|
 | IGhostInput | `Scripts/Input/IGhostInput.cs` | Interface: GetMoveDirection, TryPossess, TryExitBody, TryPickupScythe, TryDropScythe, TryReap, TryAttack |
-| LocalGhostInput | `Scripts/Input/LocalGhostInput.cs` | Keyboard input: WASD move, E possess, Q exit, F/G scythe, R reap, LMB attack |
+| LocalGhostInput | `Scripts/Input/LocalGhostInput.cs` | New Input System (Keyboard.current/Mouse.current): WASD move, E possess, Q exit, F/G scythe, R reap, LMB attack |
 
 ### HNR.Ghost
 

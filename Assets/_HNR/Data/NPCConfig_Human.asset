@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5900aa3240d0084d9f3fc65368c6475, type: 3}
+  m_Name: NPCConfig_Human
+  m_EditorClassIdentifier: Assembly-CSharp::HNR.NPC.NPCConfigSO
+  npcType: 0
+  freshKillRotTime: 60
+  possessionRotMultiplier: 2
+  damageToRotConversion: 5
+  moveSpeed: 4
+  canClimb: 0
+  canFly: 0
+  canBurrow: 0
+  aliveWalkSpeed: 2

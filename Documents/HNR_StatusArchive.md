@@ -6,4 +6,6 @@
 
 ---
 
-(No archived sessions yet.)
+**Session 2 (Apr 2, 2026) -- Mechanics Review:**
+- GDD v2.0 written -- original "possess the dead" mechanics restored
+- CUT: Phase system, Collapse event, Reaper energy, scythe-gated possession, Lane Strike, Decay Pulse

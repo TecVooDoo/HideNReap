@@ -5,7 +5,7 @@
 **Unity Version:** 6000.3.10f1 (Unity 6, URP)
 **Working Path:** `E:\Unity\HideNReap` (standalone)
 **HNR Root:** `Assets/_HNR/`
-**Last Updated:** April 2, 2026 (Session 3 -- Sprint 1 Foundation)
+**Last Updated:** April 13, 2026 (Session 4 -- Standalone Setup + Scene Rebuild)
 
 > **ARCHIVE RULE:** This doc holds only the current state and last ~2 sessions. When adding a new session, move older entries to `HNR_StatusArchive.md` (newest first at top of archive). This keeps the status doc fast to read while preserving full history.
 
@@ -15,37 +15,37 @@
 
 ## Current State
 
-**Phase:** Sprint 1 in progress. Core ghost movement, NPC lifecycle, possession system written and partially tested. Scene needs fixups before next playtest.
+**Phase:** Sprint 1 in progress. Standalone project fully set up. Scene rebuilt, core loop playable. Stand-up physics fix applied, needs retest.
+
+**Session 4 (Apr 13, 2026) -- Standalone Setup + Scene Rebuild:**
+- Migrated to standalone project at `E:\Unity\HideNReap` (was prototyped in Sandbox)
+- Git initialized, initial commit pushed to `https://github.com/TecVooDoo/HideNReap` (branch: main)
+- .gitignore set up: tracks only `_HNR/`, project config, docs. Excludes all third-party assets.
+- MCP configured: port 26876, `.mcp.json` + `.claude/mcp.json` + `.vscode/mcp.json` all wired up
+- Added HideNReap to MCP_ConnectionBrief.md port registry
+- Set up Unity layers: 6=Supernatural, 7=Living (via script-execute)
+- Created GhostConfig.asset + NPCConfig_Human.asset ScriptableObjects
+- Rebuilt HNR_GraveyardTest scene from scratch (blank scene after migration):
+  - Main Camera at (0,2,-15), perspective FOV 40, WorldLayerManager component
+  - Ground (dark green cube, 20x1x10)
+  - GhostPlayer (cyan capsule, layer=Supernatural) with LocalGhostInput, GhostController, PossessionSystem, ScreenBoundary
+  - 3 dead bodies (DeadBody_Fresh 10%, DeadBody_Decaying 40%, DeadBody_Rotting 70%) with Rigidbodies and NPCLifecycle
+- Rewrote LocalGhostInput: old `UnityEngine.Input` API -> new Input System (`Keyboard.current`/`Mouse.current`)
+- Fixed BodyController stand-up physics: use `rb.position`/`rb.rotation` instead of `transform` to prevent physics override. Clear velocity before repositioning.
+- **Playtest results:** Ghost WASD movement works (floaty feel). E/Q possess/exit works. Body moves left/right when possessed. Stand-up was intermittent before fix -- needs retest.
+- **Compile times:** Fast! Standalone project compiles in seconds vs 10-15 min in Sandbox. Migration was the right call.
 
 **Session 3 (Apr 2, 2026) -- Sprint 1 Foundation:**
-- Created GhostConfigSO (speed 8, accel 12, decel 4 for floaty feel, lane positions, possession cooldown 3s)
-- Created GhostController (floaty X/Y movement, state transitions Ghost/Possessed/Reaper, possession cooldown, WorldLayerManager integration)
-- Created ScreenBoundary (clamps rigidbody to camera viewport, supports ortho + perspective)
-- Created NPCLifecycleState enum, NPCType enum, NPCConfigSO (per-type rot + movement config)
-- Created NPCLifecycle (Alive/Dead/Possessed/Destroyed state machine, rot timer with 4 stages per GDD, damage-to-rot, events)
-- Created PossessionSystem (bridges GhostController + NPCLifecycle, OverlapSphere body detection, exit via BodyController event)
-- Created BodyController (ground-based possessed body movement, stand-up/lie-down, exit input)
-- Set up Unity layers: 6=Supernatural, 7=Living
-- Created GhostConfig.asset + NPCConfig_Human.asset SOs
-- Built HNR_GraveyardTest scene: fixed camera at (0,2,-15), ground, ghost player (cyan capsule), 3 dead bodies at various rot
-- Disabled Unity Auto Refresh (added to NewProjectSetup_Brief.md as standard)
-- **Playtest results:** Ghost WASD movement works (floaty feel confirmed). E/Q possess/exit works. Body moves left/right when possessed.
-- **Known issues from playtest:**
-  - Scene bodies need Rigidbodies added (scene was built without them)
-  - Body stand-up Y position fix is in code but untested (bodies at Y=0.5 embed in ground when rotated upright, need Y=1)
-  - Lane switching deferred (removed from vertical input to prevent Z drift)
-- **BLOCKER:** Sandbox compile times 10-15 min per change. Auto Refresh now disabled (Ctrl+R manual compile), but still painful. Consider standalone migration sooner if this continues.
+- All 14 scripts written (Core, Input, Ghost, NPC, Possession) -- see CodeReference.md
+- Scene was built in Sandbox but did not transfer to standalone (scene file was blank)
+- Scripts transferred fine -- all compile clean
 
-**Session 2 (Apr 2, 2026) -- Mechanics Review:**
-- GDD v2.0 written -- original "possess the dead" mechanics restored
-- CUT: Phase system, Collapse event, Reaper energy, scythe-gated possession, Lane Strike, Decay Pulse
-
-**Next (Session 4 -- Finish Sprint 1 Playtest):**
-- Fix test scene: add Rigidbodies to body capsules, verify stand-up/lie-down works
+**Next (Session 5 -- Finish Sprint 1):**
+- Retest stand-up/lie-down with physics fix (should be consistent now)
 - Verify possession cooldown (3s timer visible in inspector)
 - Verify rot timer ticking (rotting body should disappear, eject ghost)
 - Verify screen boundary clamping
-- If all Sprint 1 items pass: commit and plan Sprint 2
+- If all Sprint 1 items pass: commit and plan Sprint 2 (Scythe + Rot economy)
 
 **Sprint Plan (Single-Player First, Network Last):**
 
