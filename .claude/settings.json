@@ -1,0 +1,13 @@
+﻿{
+    "permissions":  {
+                        "allow":  [
+                                      "Bash(*)",
+                                      "PowerShell(*)",
+                                      "Read(*)",
+                                      "Bash(git push origin main*)",
+                                      "Bash(git push origin HEAD*)",
+                                      "Read(.claude/settings.json)",
+                                      "Read(.claude/settings.local.json)"
+                                  ]
+                    }
+}
