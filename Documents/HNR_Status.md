@@ -21,7 +21,7 @@
 - Migrated to standalone project at `E:\Unity\HideNReap` (was prototyped in Sandbox)
 - Git initialized, initial commit pushed to `https://github.com/TecVooDoo/HideNReap` (branch: main)
 - .gitignore set up: tracks only `_HNR/`, project config, docs. Excludes all third-party assets.
-- MCP configured: port 26876, `.mcp.json` + `.claude/mcp.json` + `.vscode/mcp.json` all wired up
+- MCP configured: port 26876, `.mcp.json` + `.claude/mcp.json` (HTTP/streamableHttp transport, verified 2026-04-27)
 - Added HideNReap to MCP_ConnectionBrief.md port registry
 - Set up Unity layers: 6=Supernatural, 7=Living (via script-execute)
 - Created GhostConfig.asset + NPCConfig_Human.asset ScriptableObjects
@@ -173,8 +173,10 @@ Evaluated KayKit, Kenney, Tiny Treats, Cute Pet (Suriyun), Assembly Kit (Sigmoid
 
 | Issue | Impact | Notes |
 |-------|--------|-------|
-| Test scene bodies missing Rigidbodies | Scene not fully testable | Bodies need RBs for stand-up/lie-down physics. Quick fix next session. |
-| Body stand-up Y position | Capsule embeds in ground at Y=0.5 | Code raises to Y=1 on possess, untested. |
+| Body stand-up Y position | Capsule embeds in ground at Y=0.5 | Code raises to Y=1 on possess, untested after Session 4 physics fix. Verify next playtest. |
+
+**Resolved since last entry:**
+- Test scene bodies missing Rigidbodies -- added in Session 4 scene rebuild.
 
 ---
 
@@ -182,9 +184,10 @@ Evaluated KayKit, Kenney, Tiny Treats, Cute Pet (Suriyun), Assembly Kit (Sigmoid
 
 | Document | Path |
 |----------|------|
-| Dev Reference | `Documents\HideNReap\HNR_DevReference.md` |
-| Code Reference | `Documents\HideNReap\HNR_CodeReference.md` |
-| GDD | `Documents\HideNReap\GDD\HNR_GDD.md` (v2.0) |
+| Dev Reference | `Documents\HNR_DevReference.md` |
+| Code Reference | `Documents\HNR_CodeReference.md` |
+| GDD | `Documents\GDD\HNR_GDD.md` (v2.0) |
+| Status Archive | `Documents\HNR_StatusArchive.md` |
 
 ---
 

@@ -1,7 +1,17 @@
 # Hide 'N Reap -- Dev Reference
 
-**Purpose:** Architecture, coding standards, and AI rules for Hide 'N Reap. Read on demand -- primary doc is `HNR_Status.md`.
-**Last Updated:** April 2, 2026 (Session 2 -- Mechanics Review)
+**Purpose:** Project-specific architecture, namespaces, folder structure, and HNR-specific deltas. Universal coding standards and session workflow live in the canonical layer; this doc points at them rather than duplicating.
+
+**Last updated:** 2026-05-11
+**Version:** 2.0
+**Primary session doc:** `HNR_Status.md` (read first, every session).
+
+## Revision History
+
+| Date | Version | Sections affected | Change |
+|------|---------|-------------------|--------|
+| 2026-04-02 | 1.0 | (initial) | Session 2 mechanics review. Established namespaces, folder structure, IGhostInput interface, two-world rendering plan, NPC/Scythe state machines, event architecture, HNR-specific coding rules, 2.5D setup, AI rules, and session workflow inline. |
+| 2026-05-11 | 2.0 | Coding Standards, Refactor Guidelines, Session Workflow | Iter-3.5 adoption: replaced inline universal blocks with canonical pointers (`Canonical/TecVooDoo_CodingStandards.md` + `Canonical/UniversalWorkflow.md`). HNR-specific deltas retained in-line below each pointer. Added this Revision History header per iter-3.5 v1.1 mandatory convention. Net ~80 lines shorter; no project-specific content lost. |
 
 ---
 
@@ -198,27 +208,29 @@ MatchManager
 
 ## Coding Standards
 
-Same as all TecVooDoo projects:
+**Universal TecVooDoo coding standards: see `E:\Unity\Sandbox\Documents\Canonical\TecVooDoo_CodingStandards.md` (canonical).** That file is the single source of truth across all TecVooDoo Unity projects. When it changes, the change shows in its Revision History header.
 
-- **No `var`** -- explicit types always
-- **No per-frame allocations/LINQ** -- cache, pool, reuse
-- **ASCII only** in docs and identifiers
-- **sealed on MonoBehaviours** -- unless inheritance intended
-- **Prefer async/await (UniTask)** -- over coroutines
-- **Prefer interfaces and generics** -- decouple systems, reduce duplication
-- **Vanilla SO architecture** -- GameEvent/GameEventListener (NOT SOAP)
-- **Extract by responsibility** -- not by line count
-- **Production-quality test code**
+### HNR-Specific Additions
 
-### HNR-Specific Standards
+These are on top of the universal rules; they do not override them.
 
-- **Input-source agnostic** -- game systems consume `IGhostInput`, never check input source
-- **Server-authoritative state** -- scythe ownership, body rot, NPC lifecycle, possession state, reap events. Clients request, server validates and broadcasts.
-- **Deterministic NPC behavior** -- same seed = same behavior on all clients
-- **Per-body rot values** -- rot belongs to the body, not the ghost. Persists across possessions.
-- **World layer discipline** -- every GameObject must be on the correct layer (Supernatural, Living, or Default). Visibility bugs are game-breaking.
+- **Input-source agnostic** -- game systems consume `IGhostInput`, never check input source. Local / network / AI implementations swap behind the interface.
+- **Server-authoritative state** -- scythe ownership, body rot, NPC lifecycle, possession state, reap events. Clients request, server validates and broadcasts. (Activates in Sprint 6 networking pass; design with the constraint now.)
+- **Deterministic NPC behavior** -- same seed = same behavior on all clients. No `Random.Range` calls that bypass the seeded RNG.
+- **Per-body rot values** -- rot belongs to the body, not the ghost. Persists across possessions. The ghost takes the consequences of what their previous body left behind.
+- **World layer discipline** -- every GameObject must be on the correct Unity layer (Supernatural=6, Living=7, Default=Shared). Visibility bugs are game-breaking; treat layer assignment as a first-class concern in every prefab.
 - **Config SOs for all tuning values** -- rot rates, hazard frequency, cooldown duration, scythe recharge time. No magic numbers in code. Tunable without recompile.
-- **No phase system** -- the game flows continuously. Do NOT introduce phase gates, forced ejections, or artificial state cycling. If tension is lacking, tune the body economy (hazard frequency, rot rates, cooldown timers).
+- **No phase system** -- the game flows continuously. Do NOT introduce phase gates, forced ejections, or artificial state cycling. If tension is lacking, tune the body economy (hazard frequency, rot rates, cooldown timers). See GDD v2.0 history for why the phase system was cut.
+- **No mimic/patrol-pattern detection** -- body type determines movement capabilities; detection is between possessed players in the living world reading each other's decisions, not pattern-matching against scripted patrols.
+- **No UI detection markers** -- detection is observational, not annotated by the UI.
+
+---
+
+## Refactor Guidelines
+
+**Universal refactor philosophy: see `E:\Unity\Sandbox\Documents\Canonical\UniversalWorkflow.md` § Refactor Philosophy (canonical).** Responsibility-driven, line count is a smell not a target, every move needs justification.
+
+No HNR-specific refactor deltas at this time. If one emerges (e.g. networking layer requires a specific split pattern), add it below this pointer.
 
 ---
 
@@ -246,6 +258,18 @@ Same approach as AQS:
 10. **All TecVooDoo coding standards apply.**
 11. **MCP tools available** -- use for scene setup, component configuration, testing.
 12. **Asset evaluations live in Sandbox** -- reference `E:\Unity\Sandbox\Documents\Sandbox_AssetLog.md`.
+
+---
+
+## Session Workflow
+
+**Universal session bookends: see `E:\Unity\Sandbox\Documents\Canonical\UniversalWorkflow.md` § Session Bookends (canonical).** Start = read Status + scan memory. Close = doc-update checklist (Status, StatusArchive if rolling, CodeReference if structure shifted, DevReference if architecture shifted, memory if a session-spanning lesson emerged) + commit + push + git-status-clean invariant.
+
+### HNR-Specific Session Notes
+
+- **Sprint cadence:** the Status doc tracks current sprint phase and a per-sprint playtest target. When a sprint's playtest target passes, log the result and roll the next sprint's checklist into the Next list.
+- **Unity Editor reachability:** verify MCP can reach the Editor (`editor-application-get-state`) at session start before doing scene/asset work. If the Editor isn't running, ask before doing anything that needs it.
+- **Push target:** `origin/main` on `https://github.com/TecVooDoo/HideNReap` (pre-authorized).
 
 ---
 

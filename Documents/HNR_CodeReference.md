@@ -1,7 +1,16 @@
 # Hide 'N Reap -- Code Reference
 
-**Purpose:** Script inventory and API reference for HNR.
-**Last Updated:** April 13, 2026 (Session 4 -- Input System fix, stand-up physics fix)
+**Purpose:** Script inventory, namespace catalog, and public API surface for HNR. Sessions read this to find existing scripts before grepping. Update when new scripts land or APIs change.
+
+**Last updated:** 2026-05-11
+**Version:** 1.1
+
+## Revision History
+
+| Date | Version | Sections affected | Change |
+|------|---------|-------------------|--------|
+| 2026-04-13 | 1.0 | (initial) | Session 4 -- documented Core, Input, Ghost, NPC, Possession scripts with public API surface. Captured GhostController / NPCLifecycle / PossessionSystem / BodyController APIs. Added SO assets, scenes, and Planned Scripts inventory. |
+| 2026-05-11 | 1.1 | Header only | Iter-3.5 adoption: added `Last updated:` / `Version:` / Revision History header per iter-3.5 v1.1 mandatory convention. No script-catalog content changed in this revision -- next code-changing session will be the first content-bearing v1.x bump. |
 
 ---
 
