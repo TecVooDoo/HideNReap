@@ -92,7 +92,7 @@ Read the /unity-initial-setup skill for detailed installation instructions.
       "$ref": "#/$defs/UnityEngine.Vector3"
     },
     "parentGameObjectRef": {
-      "$ref": "#/$defs/com.IvanMurzak.Unity.MCP.Runtime.Data.GameObjectRef"
+      "$ref": "#/$defs/AIGD.GameObjectRef"
     }
   },
   "$defs": {
@@ -119,7 +119,7 @@ Read the /unity-initial-setup skill for detailed installation instructions.
     "System.Type": {
       "type": "string"
     },
-    "com.IvanMurzak.Unity.MCP.Runtime.Data.GameObjectRef": {
+    "AIGD.GameObjectRef": {
       "type": "object",
       "properties": {
         "instanceID": {

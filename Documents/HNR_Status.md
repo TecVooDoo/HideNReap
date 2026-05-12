@@ -2,10 +2,11 @@
 
 **Project:** Hide 'N Reap (2.5D Competitive Multiplayer / Social Deception)
 **Developer:** TecVooDoo LLC / Rune (Stephen Brandon)
-**Unity Version:** 6000.3.10f1 (Unity 6, URP)
+**Unity Version:** 6000.3.15f1 (Unity 6, URP)
+**MCP Plugin:** `com.ivanmurzak.unity.mcp` 0.72.x (streamableHttp, port 26876)
 **Working Path:** `E:\Unity\HideNReap` (standalone)
 **HNR Root:** `Assets/_HNR/`
-**Last Updated:** April 13, 2026 (Session 4 -- Standalone Setup + Scene Rebuild)
+**Last Updated:** 2026-05-11 (Session 5 -- Recovery housekeeping + iter-3.5 adoption + version upgrades)
 
 > **ARCHIVE RULE:** This doc holds only the current state and last ~2 sessions. When adding a new session, move older entries to `HNR_StatusArchive.md` (newest first at top of archive). This keeps the status doc fast to read while preserving full history.
 
@@ -15,7 +16,17 @@
 
 ## Current State
 
-**Phase:** Sprint 1 in progress. Standalone project fully set up. Scene rebuilt, core loop playable. Stand-up physics fix applied, needs retest.
+**Phase:** Sprint 1 in progress, paused for post-crash recovery pass. Project state: scene compiles clean, MCP reachable at 0.72.x, working tree clean. Sprint 1 retest list still pending playtest.
+
+**Session 5 (2026-05-11) -- Recovery housekeeping + iter-3.5 adoption + version upgrades:**
+- Post-May-9 crash recovery pass. No project files lost (HNR survived on `E:`); per-project Claude memory at `C:\Users\steph\.claude\projects\e--Unity-HideNReap\memory\` rebuilt from project docs + Sandbox canonicals.
+- **Unity upgrade:** 6000.3.11f1 -> 6000.3.15f1 (Status doc had cached an even older `6000.3.10f1` -- corrected here). Editor opens clean, scene loads, only transient file-lock warning on `Unity.AI.Navigation.Editor.ConversionSystem.dll` during a recompile (not blocking).
+- **MCP upgrade:** core plugin 0.66.1 -> 0.72.0, with sub-packages restored: `animation 1.1.38`, `particlesystem 1.0.64`, `probuilder 1.0.76`. First verified `0.66.1 -> 0.72.0` jump in the fleet (Sandbox went via 0.71.0). Console clean, `scene-list-opened` returns valid response, no HTTP 400 schema errors. **Open question from MCP brief answered:** the `.meta`-stub problem does NOT reproduce on the 0.66.1 -> 0.72.0 path -- upgrade went clean without manual `.meta` swap. TMCP asmdef static-fallback + auto-sync handled the DLL filename convention change (0.66.1 versioned-subfolder layout -> 0.72.0 unversioned-flat layout).
+- **Other package shifts from the Unity upgrade:** `com.unity.collab-proxy` 2.11.4 -> 2.12.4, `com.unity.editorcoroutines` 1.0.1 -> 1.1.0, `com.unity.ide.rider` removed, `com.unity.textmeshpro` removed (bundled via newer ugui), all skill metadata regenerated under `.claude/skills/`, new `screenshot-isolated` skill added by MCP 0.72, `HideNReap.slnx` written (new Unity solution format replacing `.sln`), `.vscode/extensions.json` + `launch.json` written.
+- **Recovery housekeeping committed (`ee99ec6`):** MCP stdio -> streamableHttp transport in both `.mcp.json` files, core pinned to 0.66.1 with sub-packages stripped, TMCP path normalized to absolute, Session 4 scene + ProjectSettings + packages-lock + skill metadata refreshes. All uncommitted on disk since April.
+- **Iter-3.5 doc-system adoption committed (`7c559ee`):** `HNR_DevReference.md` slimmed to canonical-pointer pattern (v2.0); `HNR_CodeReference.md` got mandatory Revision History header (v1.1); `HNR_Status.md` Reference Documents paths corrected; `CLAUDE.md` pointer-index created at project root.
+- **Memory:** new entries for user role, project concept, repo paths, doc map, canonical pointers (CodingStandards + UniversalWorkflow + MCP brief), and a `feedback_push_to_main_allowed.md` for the standing `git push origin main` permission.
+- **Carryovers:** two untracked debug PNGs in `Documents/` (`camera_check.png`, `scene_check.png`) left in place for user triage. Sprint 1 playtest retest list (Session 4 carryover) still open.
 
 **Session 4 (Apr 13, 2026) -- Standalone Setup + Scene Rebuild:**
 - Migrated to standalone project at `E:\Unity\HideNReap` (was prototyped in Sandbox)
@@ -35,17 +46,15 @@
 - **Playtest results:** Ghost WASD movement works (floaty feel). E/Q possess/exit works. Body moves left/right when possessed. Stand-up was intermittent before fix -- needs retest.
 - **Compile times:** Fast! Standalone project compiles in seconds vs 10-15 min in Sandbox. Migration was the right call.
 
-**Session 3 (Apr 2, 2026) -- Sprint 1 Foundation:**
-- All 14 scripts written (Core, Input, Ghost, NPC, Possession) -- see CodeReference.md
-- Scene was built in Sandbox but did not transfer to standalone (scene file was blank)
-- Scripts transferred fine -- all compile clean
+> Session 3 archived to `HNR_StatusArchive.md` per the ~2-session window rule.
 
-**Next (Session 5 -- Finish Sprint 1):**
-- Retest stand-up/lie-down with physics fix (should be consistent now)
-- Verify possession cooldown (3s timer visible in inspector)
-- Verify rot timer ticking (rotting body should disappear, eject ghost)
-- Verify screen boundary clamping
-- If all Sprint 1 items pass: commit and plan Sprint 2 (Scythe + Rot economy)
+**Next (Session 6 -- Finish Sprint 1 playtest):**
+- Retest stand-up/lie-down with the Session 4 physics fix (should be consistent now).
+- Verify possession cooldown (3s timer visible in inspector).
+- Verify rot timer ticking (rotting body should disappear, eject ghost).
+- Verify screen boundary clamping.
+- Triage `Documents/camera_check.png` + `Documents/scene_check.png` -- commit, gitignore, or delete.
+- If all Sprint 1 items pass: commit and plan Sprint 2 (Scythe + Rot economy).
 
 **Sprint Plan (Single-Player First, Network Last):**
 

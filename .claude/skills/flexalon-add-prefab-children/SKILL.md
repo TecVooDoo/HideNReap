@@ -52,7 +52,7 @@ Read the /unity-initial-setup skill for detailed installation instructions.
   "type": "object",
   "properties": {
     "layoutRef": {
-      "$ref": "#/$defs/com.IvanMurzak.Unity.MCP.Runtime.Data.GameObjectRef"
+      "$ref": "#/$defs/AIGD.GameObjectRef"
     },
     "prefabPath": {
       "type": "string"
@@ -68,7 +68,7 @@ Read the /unity-initial-setup skill for detailed installation instructions.
     "System.Type": {
       "type": "string"
     },
-    "com.IvanMurzak.Unity.MCP.Runtime.Data.GameObjectRef": {
+    "AIGD.GameObjectRef": {
       "type": "object",
       "properties": {
         "instanceID": {
